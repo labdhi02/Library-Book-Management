@@ -1,0 +1,179 @@
+﻿@model IEnumerable<LibraryManagement.Models.Book>
+
+@{
+    ViewBag.Title = "Library Catalog";
+}
+
+<!-- Page Title and Subtitle -->
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary font-weight-bold"><b>Welcome to the Library Catalog</b></h1>
+    <p class="lead text-muted">Explore the collection of books and manage your library.</p>
+</div>
+
+<!-- Register New Book Button -->
+<div class="text-right mb-4">
+    <a asp-action="Create" class="btn btn-success btn-lg">
+        <i class="bi bi-book-plus"></i> Register a New Book
+    </a>
+</div>
+
+<!-- Success Message (If any) -->
+@if (TempData["Message"] != null)
+{
+    <div id="success-alert" class="alert alert-success mb-3 text-center">
+        @TempData["Message"]
+    </div>
+
+    <script>
+        setTimeout(function () {
+            document.getElementById('success-alert').style.display = 'none';
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script>
+}
+
+<!-- Table to Display Books -->
+<div class="table-responsive">
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Publication Date</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Genre</td>
+                    <td>@book.Price.ToString("C")</td>
+                    <td>@book.PublicationDate.ToString("dd MMM yyyy")</td>
+                    <td class="text-center">
+                        <a asp-action="Details" asp-route-id="@book.BookId" class="btn btn-info btn-sm mr-2" title="View Details">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@book.BookId" class="btn btn-warning btn-sm mr-2" title="Edit Book">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@book.BookId" class="btn btn-danger btn-sm" title="Delete Book" data-toggle="modal" data-target="#deleteModal" data-id="@book.BookId">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Optional: Custom Styles -->
+<style>
+    /* Page Title and Subtitle */
+    h1 {
+        font-size: 2.8rem;
+        font-weight: 600;
+        color: #1e3a8a;
+    }
+
+    p.lead {
+        font-size: 1.3rem;
+        color: #6b7280;
+    }
+
+    /* Table Styling */
+    .table {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .thead-dark {
+        background-color: #343a40;
+        color: white;
+    }
+
+    table th, table td {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    /* Action Buttons */
+    .btn {
+        padding: 0.6rem 1.2rem;
+        border-radius: 5px;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-sm {
+        font-size: 0.9rem;
+    }
+
+        .btn-sm + .btn-sm {
+            margin-left: 12px;
+        }
+
+    /* Alerts */
+    .alert {
+        font-size: 1.2rem;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* Modal Confirmation Styling (Optional for Delete) */
+    .modal-header {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .modal-footer .btn-danger {
+        background-color: #c82333;
+    }
+</style>
+
+<!-- Optional: Modal for Delete Confirmation -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this book? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post">
+                    <input type="hidden" id="bookId" name="id" />
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional: Add FontAwesome and Bootstrap Icons for icons in buttons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">

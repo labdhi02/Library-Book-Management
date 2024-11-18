@@ -1,0 +1,29 @@
+﻿@model LibraryManagement.Models.Book
+
+<h1>Book Details</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Title</th>
+        <td>@Model.Title</td>
+    </tr>
+    <tr>
+        <th>Author</th>
+        <td>@Model.Author</td>
+    </tr>
+    <tr>
+        <th>Genre</th>
+        <td>@Model.Genre</td>
+    </tr>
+    <tr>
+        <th>Price</th>
+        <td>@Model.Price</td>
+    </tr>
+    <tr>
+        <th>Publication Date</th>
+        <td>@Model.PublicationDate.ToString("dd MMM yyyy")</td>
+    </tr>
+</table>
+
+<a href="/Books" class="btn btn-secondary">Back to List</a>
+<a href="/Books/Edit/@Model.BookId" class="btn btn-warning">Edit</a>
+<a href="/Books/Delete/@Model.BookId" class="btn btn-danger">Delete</a>
