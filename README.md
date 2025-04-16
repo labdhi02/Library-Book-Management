@@ -1,4 +1,4 @@
-# Employee Management System
+# Library Management System
 
 This project is an **Employee Management System** developed using **ASP.NET Core MVC** and **Entity Framework Core**. It provides a user-friendly interface for managing employee data, including functionality for adding, editing, deleting, and viewing employee information. The system allows administrators to manage employee details, enhancing organizational efficiency and employee data accessibility.
 
